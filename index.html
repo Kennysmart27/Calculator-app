@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>CALCULATOR APP</title>
+    
+</head>
+<body>
+    <h1>CALCULATOR BY KS</h1>
+    <div class="container">
+        <div class="calculator">
+            <form>
+                <div class="display">
+                    <input type="text" name="display" id="display" placeholder="0">
+                </div>
+                <div>
+                    <input type="button" value="AC" onclick="clearDisplay()">
+                    <input type="button" value="+/-" onclick="changeSign()">
+                    <input type="button" value="%" onclick="percent()">
+                    <input type="button" value="/" class="operator" onclick="appendOperator('/')">
+                </div>
+                <div>
+                    <input type="button" value="7" onclick="appendToDisplay('7')">
+                    <input type="button" value="8" onclick="appendToDisplay('8')">
+                    <input type="button" value="9" onclick="appendToDisplay('9')">
+                    <input type="button" value="X" class="operator" onclick="appendOperator('*')">
+                </div>
+                <div>
+                    <input type="button" value="4" onclick="appendToDisplay('4')">
+                    <input type="button" value="5" onclick="appendToDisplay('5')">
+                    <input type="button" value="6" onclick="appendToDisplay('6')">
+                    <input type="button" value="-" class="operator" onclick="appendOperator('-')">
+                </div>
+                <div>
+                    <input type="button" value="1" onclick="appendToDisplay('1')">
+                    <input type="button" value="2" onclick="appendToDisplay('2')">
+                    <input type="button" value="3" onclick="appendToDisplay('3')">
+                    <input type="button" value="+" class="operator" onclick="appendOperator('+')">
+                </div>
+                <div>
+                    <input type="button" value="0" onclick="appendToDisplay('0')">
+                    <input type="button" value="." onclick="appendDecimal()">
+                    <input type="button" value="=" class="equal" onclick="calculate()">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentInput = "";
+        let operator = "";
+        let firstOperand = "";
+
+        function clearDisplay() {
+            document.getElementById("display").value = "0";
+            currentInput = "";
+            operator = "";
+            firstOperand = "";
+        }
+
+        function changeSign() {
+            const display = document.getElementById("display");
+            currentInput = (parseFloat(display.value) * -1).toString();
+            display.value = currentInput;
+        }
+
+        function percent() {
+            const display = document.getElementById("display");
+            currentInput = (parseFloat(display.value) / 100).toString();
+            display.value = currentInput;
+        }
+
+        function appendToDisplay(value) {
+            const display = document.getElementById("display");
+            currentInput += value;
+            display.value = currentInput;
+        }
+
+        function appendDecimal() {
+            const display = document.getElementById("display");
+            if (!currentInput.includes(".")) {
+                currentInput += ".";
+                display.value = currentInput;
+            }
+        }
+
+        function appendOperator(op) {
+            operator = op;
+            firstOperand = currentInput;
+            currentInput = "";
+        }
+
+        function calculate() {
+            const display = document.getElementById("display");
+            let result;
+
+            switch (operator) {
+                case '+':
+                    result = parseFloat(firstOperand) + parseFloat(currentInput);
+                    break;
+                case '-':
+                    result = parseFloat(firstOperand) - parseFloat(currentInput);
+                    break;
+                case '*':
+                    result = parseFloat(firstOperand) * parseFloat(currentInput);
+                    break;
+                case '/':
+                    result = parseFloat(firstOperand) / parseFloat(currentInput);
+                    break;
+                default:
+                    result = currentInput;
+            }
+
+            display.value = result.toString();
+            currentInput = result.toString();
+            operator = "";
+            firstOperand = "";
+        }
+    </script>
+</body>
+</html>
